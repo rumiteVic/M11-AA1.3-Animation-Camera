@@ -6,7 +6,7 @@ public class CameraScript : MonoBehaviour
     public Camera cam;
     public Transform player;
     public float sensibility = 0.15f;
-    public float distance = 2f;
+    public float distance = 8f;
     float speed = 3f;
 
     float x;
@@ -16,10 +16,11 @@ public class CameraScript : MonoBehaviour
     Quaternion rotation;
     Vector3 offset;
     Vector3 dir;
-
     public LayerMask layerMask;
 
-    void Awake()
+    Vector3 cameraOffset;
+
+    void Start()
     {
         input = new InputSystem_Actions();
         input.Player.Enable();
@@ -36,22 +37,19 @@ public class CameraScript : MonoBehaviour
         y -= mouse.y;
 
         rotation = Quaternion.Euler(y, x, 0f);
-
         offset = rotation * new Vector3(0f, 0f, -distance);
-
-        cameraPlace = player.position + offset;       
+        cameraPlace = player.position + offset;
 
         RaycastHit hit;
         dir = (cameraPlace - player.position).normalized;
-
         if (Physics.SphereCast(player.position, 0.2f, dir, out hit, distance, layerMask)){
             cameraPlace = hit.point;
         }
         else{
             cameraPlace = Vector3.Lerp(transform.position, cameraPlace, Time.deltaTime * speed);
         }
-
+        cameraOffset = new Vector3(player.position.x + 0.5f, player.position.y, player.position.z);
         transform.position = cameraPlace;
-        transform.LookAt(player.position);
+        transform.LookAt(cameraOffset);
     }
 }

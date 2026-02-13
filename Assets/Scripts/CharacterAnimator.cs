@@ -44,7 +44,6 @@ public class CharacterAnimator : MonoBehaviour
         if (!gd.grounded && cm.velocity.y < 0f){
             fallSpeed = Mathf.Abs(cm.velocity.y);
         }
-
         else{
             fallSpeed = 0f;
         }
@@ -54,23 +53,6 @@ public class CharacterAnimator : MonoBehaviour
         anim.SetFloat("Upwards", animFallSpeed);
 
         gunPivot.LookAt(lookat);
-    }
-
-    void OnAnimatorIK()
-    {
-
-        anim.SetLookAtWeight(1);
-        anim.SetLookAtPosition(mira.position);
-
-        anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
-        anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1f);
-        anim.SetIKPosition(AvatarIKGoal.RightHand, gunRightHand.position);
-        anim.SetIKRotation(AvatarIKGoal.RightHand, gunRightHand.rotation);
-
-        anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
-        anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1f);
-        anim.SetIKPosition(AvatarIKGoal.LeftHand, gunLeftHand.position);
-        anim.SetIKRotation(AvatarIKGoal.LeftHand, gunLeftHand.rotation);
     }
 
     private void FixLookat()
@@ -88,5 +70,20 @@ public class CharacterAnimator : MonoBehaviour
             forwardLookAt = Quaternion.AngleAxis(angle > 0 ? -maxAngle : maxAngle, axis) * transform.forward;
             lookat = cameraLookAt.transform.position + forwardLookAt * distance;
         }
+    }
+
+    void OnAnimatorIK(){
+        anim.SetLookAtWeight(1);
+        anim.SetLookAtPosition(mira.position);
+
+        anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
+        anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1f);
+        anim.SetIKPosition(AvatarIKGoal.RightHand, gunRightHand.position);
+        anim.SetIKRotation(AvatarIKGoal.RightHand, gunRightHand.rotation);
+
+        anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
+        anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1f);
+        anim.SetIKPosition(AvatarIKGoal.LeftHand, gunLeftHand.position);
+        anim.SetIKRotation(AvatarIKGoal.LeftHand, gunLeftHand.rotation);
     }
 }

@@ -53,13 +53,13 @@ public class Projectile : MonoBehaviour
 
     void Hitted(RaycastHit hit)
     {
+        GameObject bulletHollee = Instantiate(bulletHole, hit.point, Quaternion.identity);            
+        Quaternion targetRotation = Quaternion.LookRotation(-hit.normal);
+        bulletHollee.transform.rotation = targetRotation;
         if (hit.rigidbody){
             hit.rigidbody.AddForceAtPosition(rb.linearVelocity * rb.mass * collisionForceMultiplier, this.transform.position);
+            bulletHollee.transform.SetParent(hit.transform);
         }
-
-        GameObject bulletHollee = Instantiate(bulletHole, hit.point, Quaternion.identity);            
-        Quaternion targetRotation = Quaternion.LookRotation(hit.normal);
-        bulletHollee.transform.rotation = targetRotation;
         transform.parent.gameObject.SetActive(false);
     }
 }

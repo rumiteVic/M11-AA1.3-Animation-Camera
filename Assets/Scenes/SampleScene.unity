@@ -6897,7 +6897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 963194227}
-  raycast: {fileID: 0}
+  raycast: {fileID: 545399008}
   uiPoint: {fileID: 1591535079}
 --- !u!4 &799558025 stripped
 Transform:
@@ -15165,7 +15165,7 @@ MonoBehaviour:
   gunPivot: {fileID: 866033694}
   gunRightHand: {fileID: 1255041503}
   gunLeftHand: {fileID: 240571657}
-  mira: {fileID: 0}
+  mira: {fileID: 545399007}
   lookAtMaxAngle: 0.5
   cameraLookAt: {fileID: 963194231}
   lookAtSpeed: 10

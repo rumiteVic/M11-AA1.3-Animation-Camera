@@ -78,16 +78,16 @@ public class GenericGun : MonoBehaviour
             return;
         }
         isReloading = true;
-        reloadingTime = Time.time + reloadTime;
-        Reload();
+        reloadingTime = 0f;
     }
 
     void Reload(){
         if (!isReloading){
             return;
         }
+        reloadingTime += Time.deltaTime;
 
-        if (Time.time >= reloadingTime){
+        if (reloadingTime>= reloadTime){
             clipCurrent = clipMax;
             isReloading = false;
         }

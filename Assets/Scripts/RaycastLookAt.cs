@@ -11,6 +11,7 @@ public class RaycastLookAt : MonoBehaviour
     void FixedUpdate()
     {
         RaycastHit hit;
+        Debug.DrawRay(transform.position, transform.forward * maxDistance, Color.red);
         if (Physics.Raycast(transform.position, transform.forward, out hit, maxDistance, lookAtMask))
         {
             lookingAt = hit.point;

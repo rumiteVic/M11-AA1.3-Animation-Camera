@@ -40,16 +40,20 @@ public class CharacterAnimator : MonoBehaviour
         anim.SetBool("Grounded", gd.grounded);
 
         FixLookat();
-        fallSpeed = 0f;
+        //Si el personaje está en el suelo (tocandolo) y la velocidad de caída es mayor a 0
         if (!gd.grounded && cm.velocity.y < 0f){
+            //Guarda en valor absoluto la velocidad de caída
+            //En absoluto porque si está cayendo es negativa
             fallSpeed = Mathf.Abs(cm.velocity.y);
         }
         else{
+            //Sino es 0
             fallSpeed = 0f;
         }
-
+        //Esto calcula la posición entre un valor de 0 a 1 dentro de un minimo y un máximo
+        //devuelve un porcentaje y no un valor interpolado
+        //Luego en la velocidad de caída se pone ese porcentaje para su velocidad de caída
         float animFallSpeed = Mathf.InverseLerp(0f, 10f, fallSpeed);
-        animFallSpeed = Mathf.Clamp(animFallSpeed, 0.5f, 1.5f);
         anim.SetFloat("Upwards", animFallSpeed);
 
         gunPivot.LookAt(lookat);
@@ -72,10 +76,13 @@ public class CharacterAnimator : MonoBehaviour
         }
     }
 
+    //Una función especial dedicada los IKs del animator
     void OnAnimatorIK(){
+        //Hacemos que el ik del cuello mire al 100% el punto de mira.position
         anim.SetLookAtWeight(1);
         anim.SetLookAtPosition(mira.position);
 
+        //Con lo siguiente se hace que tanto la posicion como rotacion de las manos esten en el transform de gunRightHand y gunLeftHand
         anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1f);
         anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1f);
         anim.SetIKPosition(AvatarIKGoal.RightHand, gunRightHand.position);

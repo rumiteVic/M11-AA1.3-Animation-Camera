@@ -23,7 +23,9 @@ public class Projectile : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-
+    //Cuando vuelve a estar activado de nuevo el objeto en escena
+    //se resetea su velocidad tanto lineal como angular
+    //Se le añade una nueva velocidad (una fuerza) y se pone que lleva vivo el objeto 0 seg
     void OnEnable(){
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
@@ -45,6 +47,8 @@ public class Projectile : MonoBehaviour
     }
 
     void Update(){
+        //Esto es para hacer que se desactive en cuanto el timer llegue al tiempo de disappearTime
+        //Se desactive el padre que es que está dentro del pool objects
         timeAlive += Time.deltaTime;
         if(timeAlive >= disappearTime){
             transform.parent.gameObject.SetActive(false);
@@ -53,6 +57,9 @@ public class Projectile : MonoBehaviour
 
     void Hitted(RaycastHit hit)
     {
+        //Si se choca con algo se crea el bulletHollee en la posición que choque y mirando
+        //de frente y si tiene rigidbody se vuelve su hijo
+        //Y se desactiva
         GameObject bulletHollee = Instantiate(bulletHole, hit.point, Quaternion.identity);            
         Quaternion targetRotation = Quaternion.LookRotation(-hit.normal);
         bulletHollee.transform.rotation = targetRotation;
